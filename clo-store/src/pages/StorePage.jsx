@@ -7,7 +7,7 @@ import {
 } from "../store/filterSlice";
 import ContentCard from "../components/ContentCard";
 import { fetchContentData } from "../features/contentSlice";
-import "../styles/StorePage.css"; // Import external CSS
+import "../styles/StorePage.css"; 
 
 const StorePage = () => {
   const dispatch = useDispatch();
