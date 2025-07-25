@@ -1,0 +1,29 @@
+.content-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-start;
+}
+
+.content-card-wrapper {
+  flex: 1 1 calc(25% - 2rem);
+  min-width: 250px;
+}
+
+@media (max-width: 1200px) {
+  .content-card-wrapper {
+    flex: 1 1 calc(33.33% - 2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .content-card-wrapper {
+    flex: 1 1 calc(50% - 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .content-card-wrapper {
+    flex: 1 1 100%;
+  }
+}
