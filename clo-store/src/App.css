@@ -40,3 +40,67 @@
 .read-the-docs {
   color: #888;
 }
+/* Header Styles */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #0f0f0f;
+  padding: 0.8rem 2rem;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #222;
+}
+
+/* Left side (logo) */
+.app-header .logo {
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Right side (input + filters) */
+.app-header .header-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Input and select styles */
+.app-header input[type="text"],
+.app-header select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* Specific width for desktop input */
+.app-header input[type="text"] {
+  width: 250px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .app-header .header-controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .app-header input[type="text"],
+  .app-header select {
+    width: 100%;
+  }
+}
