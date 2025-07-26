@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import StorePage from "./pages/StorePage";
 import { fetchContentData } from "./features/contentSlice";
 
 const App = () => {
   const dispatch = useDispatch();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchContentData());
@@ -12,47 +13,69 @@ const App = () => {
 
   return (
     <div style={{ backgroundColor: "#f9fafb", color: "#1f2937" }}>
-      {/* Responsive header styles */}
       <style>
         {`
+          .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #0f0f0f;
+            padding: 0.8rem 2rem;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #222;
+          }
+
+          .top-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+          }
+
+          .top-controls input,
+          .top-controls select {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            color: #fff;
+          }
+
+          .mobile-toggle {
+            display: none;
+            font-size: 1.4rem;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+          }
+
           @media (max-width: 768px) {
-            .responsive-header {
+            .top-controls {
+              display: ${menuOpen ? "flex" : "none"};
               flex-direction: column;
-              align-items: flex-start !important;
-              gap: 1rem;
-            }
-
-            .responsive-controls {
-              flex-direction: column;
-              align-items: stretch !important;
+              align-items: stretch;
               width: 100%;
-              gap: 0.5rem;
+              margin-top: 1rem;
             }
 
-            .responsive-controls input,
-            .responsive-controls select {
-              width: 100% !important;
+            .top-controls input,
+            .top-controls select {
+              width: 100%;
+            }
+
+            .mobile-toggle {
+              display: block;
             }
           }
         `}
       </style>
 
-      <header
-        className="responsive-header"
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 999,
-          backgroundColor: "#0f0f0f",
-          padding: "0.8rem 2rem",
-          color: "#fff",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          borderBottom: "1px solid #222",
-        }}
-      >
+      <header className="top-header">
         <div
           style={{
             fontWeight: "bold",
@@ -63,48 +86,22 @@ const App = () => {
           CLO<span style={{ color: "#FFD700" }}>-SET</span> Store
         </div>
 
-        <div
-          className="responsive-controls"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-            alignItems: "center",
-          }}
+        {/* Hamburger menu button */}
+        <button
+          className="mobile-toggle"
+          onClick={() => setMenuOpen((prev) => !prev)}
         >
-          <input
-            type="text"
-            placeholder="Find the items you’re looking for"
-            style={{
-              padding: "6px 12px",
-              borderRadius: "6px",
-              border: "1px solid #444",
-              background: "#1a1a1a",
-              color: "#fff",
-              width: "250px",
-            }}
-          />
-          <select
-            style={{
-              background: "#1a1a1a",
-              color: "#fff",
-              padding: "6px 10px",
-              borderRadius: "6px",
-              border: "1px solid #444",
-            }}
-          >
+          ☰
+        </button>
+
+        {/* Filter controls */}
+        <div className="top-controls">
+          <input type="text" placeholder="Find the items you’re looking for" />
+          <select>
             <option>Curator’s Pick</option>
             <option>Trending</option>
           </select>
-          <select
-            style={{
-              background: "#1a1a1a",
-              color: "#fff",
-              padding: "6px 10px",
-              borderRadius: "6px",
-              border: "1px solid #444",
-            }}
-          >
+          <select>
             <option>Official</option>
             <option>Community</option>
           </select>
