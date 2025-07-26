@@ -1,8 +1,9 @@
-// App.jsx
+
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import StorePage from "./pages/StorePage";
 import { fetchContentData } from "./features/contentSlice";
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -12,9 +13,52 @@ const App = () => {
 
   return (
     <div style={{ backgroundColor: "#f9fafb", color: "#1f2937" }}>
-      <header style={{ backgroundColor: "white", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)", padding: "1rem", textAlign: "center", fontSize: "1.5rem", fontWeight: "600" }}>
-        CLO-SET Store Page
-      </header>
+    <header
+  style={{
+    position: "sticky",
+    top: 0,
+    zIndex: 999,
+    backgroundColor: "#0f0f0f",
+    padding: "0.8rem 2rem",
+    color: "#fff",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    borderBottom: "1px solid #222",
+  }}
+>
+  <div style={{ fontWeight: "bold", fontSize: "1.1rem", letterSpacing: "0.5px" }}>
+    CLO<span style={{ color: "#FFD700" }}>-SET</span> Store
+  </div>
+  <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
+    <input
+      type="text"
+      placeholder="Find the items you’re looking for"
+      style={{
+        padding: "6px 12px",
+        borderRadius: "6px",
+        border: "1px solid #444",
+        background: "#1a1a1a",
+        color: "#fff",
+        width: "250px",
+      }}
+    />
+    <select style={{ background: "#1a1a1a", color: "#fff", padding: "6px 10px", borderRadius: "6px", border: "1px solid #444" }}>
+      <option>Curator’s Pick</option>
+      <option>Trending</option>
+    </select>
+    <select style={{ background: "#1a1a1a", color: "#fff", padding: "6px 10px", borderRadius: "6px", border: "1px solid #444" }}>
+      <option>Official</option>
+      <option>Community</option>
+    </select>
+    <span style={{ fontSize: "0.9rem", color: "#ccc" }}>75,581 Items</span>
+  </div>
+</header>
+
+
+
+
       <main style={{ padding: "1rem" }}>
         <StorePage />
       </main>
