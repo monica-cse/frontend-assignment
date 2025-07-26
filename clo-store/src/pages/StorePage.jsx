@@ -7,13 +7,34 @@ import {
 } from "../store/filterSlice";
 import ContentCard from "../components/ContentCard";
 import { fetchContentData } from "../features/contentSlice";
-import "../styles/StorePage.css"; 
+import "../styles/StorePage.css";
 
 const StorePage = () => {
   const dispatch = useDispatch();
   const { keyword, pricing } = useSelector((state) => state.filter);
   const { allItems, status } = useSelector((state) => state.content);
   const [loadMoreCount, setLoadMoreCount] = useState(20);
+
+  // Restore filters from localStorage on load
+  useEffect(() => {
+    const savedKeyword = localStorage.getItem("keyword");
+    const savedPricing = localStorage.getItem("pricing");
+
+    if (savedKeyword) dispatch(setKeyword(savedKeyword));
+
+    if (savedPricing) {
+      const parsed = JSON.parse(savedPricing);
+      Object.keys(parsed).forEach((key) => {
+        if (parsed[key]) dispatch(togglePricing(key));
+      });
+    }
+  }, [dispatch]);
+
+  //  Save filters to localStorage on change
+  useEffect(() => {
+    localStorage.setItem("keyword", keyword);
+    localStorage.setItem("pricing", JSON.stringify(pricing));
+  }, [keyword, pricing]);
 
   useEffect(() => {
     dispatch(fetchContentData());
@@ -34,7 +55,11 @@ const StorePage = () => {
   }, []);
 
   const handleCheckbox = (key) => dispatch(togglePricing(key));
-  const handleReset = () => dispatch(resetFilters());
+  const handleReset = () => {
+    dispatch(resetFilters());
+    localStorage.removeItem("keyword");
+    localStorage.removeItem("pricing");
+  };
   const handleSearch = (e) => dispatch(setKeyword(e.target.value));
 
   const selectedPricing = Object.keys(pricing).filter((key) => pricing[key]);
@@ -60,7 +85,7 @@ const StorePage = () => {
       {/* Top Filter Bar */}
       <div className="top-filter-bar">
         <h2 className="filters-title">Filters</h2>
-        
+
         <input
           type="text"
           value={keyword}
@@ -100,9 +125,7 @@ const StorePage = () => {
         ) : (
           <div className="content-grid">
             {visibleItems.length === 0 ? (
-              <p className="no-results">
-                No matching items found.
-              </p>
+              <p className="no-results">No matching items found.</p>
             ) : (
               visibleItems.map((item) => (
                 <div key={item.id} className="content-card-wrapper">
