@@ -12,6 +12,11 @@
   padding: 1.5rem;
   border-right: 1px solid #ddd;
   background-color: #f9f9f9;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .sidebar-title {
@@ -78,6 +83,8 @@
 
   .sidebar {
     width: 100%;
+    height: auto;
+    position: relative;
     border-right: none;
     border-bottom: 1px solid #ddd;
   }
