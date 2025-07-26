@@ -56,42 +56,29 @@ const StorePage = () => {
   const visibleItems = filteredItems.slice(0, loadMoreCount);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <div
-        style={{
-          width: "280px",
-          padding: "1.5rem",
-          borderRight: "1px solid #ddd",
-          backgroundColor: "#f9f9f9",
-        }}
-      >
-        <h2 style={{ marginBottom: "1rem", fontSize: "20px" }}>Filters</h2>
-
+    <div>
+      {/* Top Filter Bar */}
+      <div className="top-filter-bar">
+        <h2 className="filters-title">Filters</h2>
+        
         <input
           type="text"
           value={keyword}
           onChange={handleSearch}
           placeholder="Search by title or user..."
-          style={{
-            padding: "8px",
-            width: "100%",
-            marginBottom: "1rem",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-          }}
+          className="search-input"
         />
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className="checkbox-group">
           {["Paid", "Free", "View Only"].map((label) => {
             const key = label.toLowerCase().replace(" ", "");
             return (
-              <label key={key} style={{ fontSize: "15px" }}>
+              <label key={key} className="checkbox-label">
                 <input
                   type="checkbox"
                   checked={pricing[key]}
                   onChange={() => handleCheckbox(key)}
-                  style={{ marginRight: "8px" }}
+                  className="checkbox-input"
                 />
                 {label}
               </label>
@@ -99,43 +86,21 @@ const StorePage = () => {
           })}
         </div>
 
-        <button
-          onClick={handleReset}
-          style={{
-            marginTop: "1rem",
-            padding: "6px 12px",
-            backgroundColor: "#e11d48",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            width: "100%",
-          }}
-        >
+        <button onClick={handleReset} className="reset-button">
           Reset
         </button>
       </div>
 
       {/* Main Content */}
-      <div style={{ flex: 1, padding: "2rem" }}>
+      <div className="main-content">
         {status === "loading" ? (
-          <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            <div className="spinner" style={{
-              width: "40px",
-              height: "40px",
-              border: "4px solid #ccc",
-              borderTop: "4px solid #333",
-              borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-              margin: "auto"
-            }} />
-            <style>
-              {`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}
-            </style>
+          <div className="spinner-container">
+            <div className="spinner" />
           </div>
         ) : (
           <div className="content-grid">
             {visibleItems.length === 0 ? (
-              <p style={{ width: "100%", textAlign: "center", color: "#666" }}>
+              <p className="no-results">
                 No matching items found.
               </p>
             ) : (
