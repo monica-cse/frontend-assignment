@@ -1,27 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load saved filter state from localStorage (if available)
-const savedState = JSON.parse(localStorage.getItem("filterState")) || {
-  keyword: "",
-  pricing: {
-    paid: false,
-    free: false,
-    viewOnly: false,
-  },
-};
-
 const filterSlice = createSlice({
   name: "filter",
-  initialState: savedState,
+  initialState: {
+    keyword: "",
+    pricing: {
+      paid: false,
+      free: false,
+      viewOnly: false,
+    },
+    priceRange: {
+      min: 0,
+      max: 999,
+    },
+  },
   reducers: {
     setKeyword(state, action) {
       state.keyword = action.payload;
-      localStorage.setItem("filterState", JSON.stringify(state));
     },
     togglePricing(state, action) {
       const key = action.payload;
       state.pricing[key] = !state.pricing[key];
-      localStorage.setItem("filterState", JSON.stringify(state));
+    },
+    setPriceRange(state, action) {
+      state.priceRange = action.payload;
     },
     resetFilters(state) {
       state.keyword = "";
@@ -30,10 +32,19 @@ const filterSlice = createSlice({
         free: false,
         viewOnly: false,
       };
-      localStorage.setItem("filterState", JSON.stringify(state));
+      state.priceRange = {
+        min: 0,
+        max: 999,
+      };
     },
   },
 });
 
-export const { setKeyword, togglePricing, resetFilters } = filterSlice.actions;
+export const {
+  setKeyword,
+  togglePricing,
+  resetFilters,
+  setPriceRange,
+} = filterSlice.actions;
+
 export default filterSlice.reducer;
