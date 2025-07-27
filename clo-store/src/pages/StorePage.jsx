@@ -9,6 +9,7 @@ import {
 import ContentCard from "../components/ContentCard";
 import { fetchContentData } from "../features/contentSlice";
 import "../styles/StorePage.css";
+import SkeletonCard from "../components/SkeletonCard";
 
 const StorePage = () => {
   const dispatch = useDispatch();
@@ -142,38 +143,6 @@ useEffect(() => {
           })}
         </div>
 
-        {/* {pricing.paid && (
-          <div className="slider-wrapper" >
-            <label style={{ display: "flex",justifyContent: "space-between" }}>
-              <span>${priceRange.min}</span>
-              <span>${priceRange.max}</span>
-            </label>
-            <input
-              type="range"
-              min={0}
-              max={999}
-              step={1}
-              value={priceRange.min}
-              onChange={(e) =>
-                dispatch(
-                  setPriceRange({ ...priceRange, min: Number(e.target.value) })
-                )
-              }
-            />
-            <input
-              type="range"
-              min={0}
-              max={999}
-              step={1}
-              value={priceRange.max}
-              onChange={(e) =>
-                dispatch(
-                  setPriceRange({ ...priceRange, max: Number(e.target.value) })
-                )
-              }
-            />
-          </div>
-        )} */}
 {pricing.paid && (
   <div className="custom-slider">
     <div className="price-values">
@@ -220,7 +189,7 @@ useEffect(() => {
       </div>
 
       {/* Main Content */}
-      <div className="main-content">
+      {/* <div className="main-content">
         {status === "loading" ? (
           <div className="spinner-container">
             <div className="spinner" />
@@ -238,7 +207,27 @@ useEffect(() => {
             )}
           </div>
         )}
-      </div>
+      </div> */}
+      {status === "loading" ? (
+  <div className="content-grid">
+    {[...Array(8)].map((_, index) => (
+      <SkeletonCard key={index} />
+    ))}
+  </div>
+) : (
+  <div className="content-grid">
+    {visibleItems.length === 0 ? (
+      <p className="no-results">No matching items found.</p>
+    ) : (
+      visibleItems.map((item) => (
+        <div key={item.id} className="content-card-wrapper">
+          <ContentCard item={item} />
+        </div>
+      ))
+    )}
+  </div>
+)}
+
     </div>
   );
 };
